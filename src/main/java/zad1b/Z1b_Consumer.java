@@ -1,4 +1,4 @@
-package zad1a;
+package zad1b;
 
 import com.rabbitmq.client.*;
 import lombok.SneakyThrows;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class Z1_Consumer {
+public class Z1b_Consumer {
 
     public static void main(String[] argv) throws Exception {
         System.out.println("Z1 CONSUMER");
@@ -17,6 +17,7 @@ public class Z1_Consumer {
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
+        channel.basicQos(1);
 
         String QUEUE_NAME = "queue1";
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
@@ -30,12 +31,12 @@ public class Z1_Consumer {
                 int timeToSleep = Integer.parseInt(message);
                 sleep(timeToSleep);
                 System.out.println("Sleeped: " + message);
-//                channel.basicAck(envelope.getDeliveryTag(), false);
+                channel.basicAck(envelope.getDeliveryTag(), false);
             }
         };
 
         System.out.println("Waiting for messages...");
-        channel.basicConsume(QUEUE_NAME, true, consumer);
+        channel.basicConsume(QUEUE_NAME, false, consumer);
 
 //        channel.close();
 //        connection.close();

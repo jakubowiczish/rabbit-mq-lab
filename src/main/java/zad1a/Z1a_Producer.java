@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 @Slf4j
-public class Z1_Producer {
+public class Z1a_Producer {
 
     public static void main(String[] argv) throws Exception {
         System.out.println("Z1 PRODUCER");
